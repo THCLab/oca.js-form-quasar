@@ -1,4 +1,4 @@
-export module 'oca.js-form-quasar' {
+declare module 'oca.js-form-quasar' {
   import type { DefineComponent } from 'vue'
 
   const components: {
