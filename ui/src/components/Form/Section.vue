@@ -1,8 +1,8 @@
 <template>
   <div>
-    {{ translations[language]?.label }}
+    {{ translations[formMeta.language]?.label }}
     <hr/>
-    <Control v-for="control in controls" :key="control.name" :control="control" :language="language" />
+    <Control v-for="control in controls" :key="control.name" :control="control" :form-meta="formMeta" />
   </div>
 </template>
 
@@ -24,8 +24,8 @@ export default defineComponent({
         return true
       }
     },
-    language: {
-      type: String,
+    formMeta: {
+      type: Object,
       required: true
     }
   },

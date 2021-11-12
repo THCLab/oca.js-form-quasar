@@ -1,23 +1,23 @@
 <template>
-  <q-card class="form">
+  <q-card class="q-pa-sm">
     <q-toolbar>
       <q-toolbar-title>
         <div class="row items-center">
           <span class="text-weight-bold col">
-            {{ translations[languages.selected]?.name }}
+            {{ translations[formMeta.language]?.name }}
           </span>
-          <q-select class="col" v-model="languages.selected" :options="languages.available" label="Language" dense options-dense />
+          <q-select class="col-2" v-model="formMeta.language" :options="availableLanguages" label="Language" dense options-dense />
         </div>
         <div class="row">
           <span class="text-weight-light text-subtitle1 col-auto">
-            {{ translations[languages.selected]?.description }}
+            {{ translations[formMeta.language]?.description }}
           </span>
         </div>
       </q-toolbar-title>
     </q-toolbar>
 
     <q-card-section>
-      <Section v-for="section in sections" :key="section.id" :section="section" :language="languages.selected" />
+      <Section v-for="section in sections" :key="section.id" :section="section" :form-meta="formMeta" />
     </q-card-section>
   </q-card>
 </template>
@@ -40,6 +40,16 @@ export default defineComponent({
         return true
       }
     },
+    readonly: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    showPii: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
     defaultLanguage: {
       type: String,
       required: false,
@@ -51,22 +61,21 @@ export default defineComponent({
     const translations = JSON.parse(JSON.stringify(props.structure.translations))
 
     const availableLanguages = Object.keys(translations)
-    const languages = reactive({
-      selected: availableLanguages.includes(props.defaultLanguage) ? props.defaultLanguage : availableLanguages[0],
-      available: availableLanguages
+    const formMeta = reactive({
+      language: availableLanguages.includes(props.defaultLanguage) ? props.defaultLanguage : availableLanguages[0],
+      readonly: props.readonly,
+      showPii: props.showPii
     })
 
     return {
       sections,
       translations,
-      languages
+      availableLanguages,
+      formMeta
     }
   }
 })
 </script>
 
 <style lang="scss">
-.form {
-  width: 50vw;
-}
 </style>

@@ -1,14 +1,36 @@
 <template>
-  <div>
-    {{ translations[language]?.label }}
+  <div class="controlItem">
+    <component :is="`${control.type}Control`" :control="control" :formMeta="formMeta">
+      <template v-slot:information>
+        <div class="information">
+          {{ translations[formMeta.language].information }}
+        </div>
+      </template>
+    </component>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import {
+  CheckboxControl,
+  DateControl,
+  NumberControl,
+  SelectControl,
+  SelectMultipleControl,
+  TextControl
+} from './Control/index'
 
 export default defineComponent({
   name: 'Control',
+  components: {
+    CheckboxControl,
+    DateControl,
+    NumberControl,
+    SelectControl,
+    SelectMultipleControl,
+    TextControl
+  },
   props: {
     control: {
       type: Object,
@@ -19,8 +41,8 @@ export default defineComponent({
         return true
       }
     },
-    language: {
-      type: String,
+    formMeta: {
+      type: Object,
       required: true
     }
   },
@@ -35,4 +57,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+  .controlItem {
+    padding: 5px 0 5px 0;
+  }
+
+  .information {
+    text-align: justify;
+    font-style: italic;
+    color: #6a6a6a;
+  }
 </style>
