@@ -2,7 +2,10 @@
   <div>
     {{ translations[formMeta.language]?.label }}
     <hr/>
-    <Control v-for="control in controls" :key="control.name" :control="control" :form-meta="formMeta" />
+    <div v-for="control in controls">
+      <Control v-if="control" :key="control.name" :control="control" :form-meta="formMeta" />
+      <div class="text-center" v-else>[unhandled control placeholder]</div>
+    </div>
   </div>
 </template>
 
