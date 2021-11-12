@@ -1,20 +1,18 @@
 <template>
   <q-card class="q-pa-sm">
-    <q-toolbar>
-      <q-toolbar-title>
-        <div class="row items-center">
-          <span class="text-weight-bold col">
-            {{ translations[formMeta.language]?.name }}
-          </span>
-          <q-select class="col-2" v-model="formMeta.language" :options="availableLanguages" label="Language" dense options-dense />
-        </div>
-        <div class="row">
-          <span class="text-weight-light text-subtitle1 col-auto">
-            {{ translations[formMeta.language]?.description }}
-          </span>
-        </div>
-      </q-toolbar-title>
-    </q-toolbar>
+    <q-card-section>
+      <div class="row items-center">
+        <span class="text-weight-bold text-h5 col">
+          {{ translations[formMeta.language]?.name }}
+        </span>
+        <q-select class="col-2" v-model="formMeta.language" :options="availableLanguages" label="Language" dense options-dense />
+      </div>
+      <div class="row">
+        <span class="text-weight-light text-subtitle1 col-auto">
+          {{ translations[formMeta.language]?.description }}
+        </span>
+      </div>
+    </q-card-section>
 
     <q-card-section>
       <Section v-for="section in sections" :key="section.id" :section="section" :form-meta="formMeta" />
