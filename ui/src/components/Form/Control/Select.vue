@@ -1,14 +1,54 @@
 <template>
-  <div>
-    select
-  </div>
+  <q-select
+    v-model="value"
+    :class="{ 'q-field--readonly': formMeta.readonly }"
+    :options="options[formMeta.language]"
+    :label="translations[formMeta.language].label"
+    :clearable="!formMeta.readonly"
+    map-options
+    emit-value
+    outlined
+    dense />
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-  name: 'SelectControl'
+  name: 'SelectControl',
+  props: {
+    control: {
+      type: Object,
+      required: true,
+      validator(value) {
+        if (!value.hasOwnProperty('name')) { return false }
+        if (!value.hasOwnProperty('translations')) { return false }
+        return true
+      }
+    },
+    formMeta: {
+      type: Object,
+      required: true
+    }
+  },
+  setup(props) {
+    const translations = JSON.parse(JSON.stringify(props.control.translations))
+    const value = ref()
+    const options = {}
+    Object.entries(translations).map(([lang, translation]) => {
+      options[lang] = props.control.entryCodes.map(code => ({
+        value: code,
+        label: translation.entries[code],
+        disable: props.formMeta.readonly
+      }))
+    })
+
+    return {
+      translations,
+      options,
+      value
+    }
+  }
 })
 </script>
 
