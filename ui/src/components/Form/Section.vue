@@ -1,11 +1,13 @@
 <template>
   <div>
-    {{ translations[formMeta.language]?.label }}
-    <hr/>
+    <component :is="`h${(section.id.match(/-/g) || []).length}`">
+      {{ translations[formMeta.language]?.label }}
+    </component>
     <div v-for="control in controls">
       <Control v-if="control" :key="control.name" :control="control" :form-meta="formMeta" />
       <div class="text-center" v-else>[unhandled control placeholder]</div>
     </div>
+    <Section v-for="subsection in section.subsections" :key="subsection.id" :section="subsection" :form-meta="formMeta" />
   </div>
 </template>
 
@@ -44,5 +46,27 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.h-base {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0.3em 0;
+  padding: 0.2em 0;
+  line-height: 1.15em;
+  border: 0;
+  border-bottom: 2px dotted rgba(0, 0, 0, .3);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @extend .h-base;
+}
+
+h1 {
+  font-size: 22px;
+  border-style: dashed;
+}
+
+h2 {
+  font-size: 18px;
+}
 </style>
