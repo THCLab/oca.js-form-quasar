@@ -37,8 +37,9 @@ export default defineComponent({
     const translations = JSON.parse(JSON.stringify(props.control.translations))
     const value = ref()
     const options = {}
+    const entryCodes = props.control.entryCodes || []
     Object.entries(translations).map(([lang, translation]) => {
-      options[lang] = props.control.entryCodes.map(code => ({
+      options[lang] = entryCodes.map(code => ({
         value: code,
         label: translation.entries[code],
         disable: props.formMeta.readonly
