@@ -10,6 +10,7 @@
     outlined
     dense
     multiple />
+  <slot name="information"/>
 </template>
 
 <script lang="ts">

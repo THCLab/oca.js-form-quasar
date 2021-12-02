@@ -9,6 +9,7 @@
     emit-value
     outlined
     dense />
+  <slot name="information"/>
 </template>
 
 <script lang="ts">

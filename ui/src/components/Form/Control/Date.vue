@@ -19,6 +19,8 @@
       </q-icon>
     </template>
   </q-input>
+
+  <slot name="information"/>
 </template>
 
 <script lang="ts">
