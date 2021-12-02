@@ -59,8 +59,17 @@ export default defineComponent({
     const translations = JSON.parse(JSON.stringify(props.structure.translations))
 
     const availableLanguages = Object.keys(translations)
+    let language
+    if (availableLanguages.includes(props.defaultLanguage)) {
+      language = props.defaultLanguage
+    } else if (availableLanguages.find(lang => lang.startsWith(props.defaultLanguage))) {
+      language = availableLanguages.find(lang => lang.startsWith(props.defaultLanguage))
+    } else {
+      language = availableLanguages[0]
+    }
+
     const formMeta = reactive({
-      language: availableLanguages.includes(props.defaultLanguage) ? props.defaultLanguage : availableLanguages[0],
+      language,
       readonly: props.readonly,
       showPii: props.showPii
     })
